@@ -1,0 +1,38 @@
+{
+  "req": {
+    "containerConfig": {
+      "diskSize": 100
+    },
+    "driverConfig": {
+      "count": 1,
+      "cpuCount": 4,
+      "memorySize:": 4
+    },
+    "executorConfig": {
+      "count": 1,
+      "cpuCount": 4,
+      "memorySize:": 4
+    }
+  },
+  "excepted": {
+    "status": "OK",
+    "message": "",
+    "body": {
+      "status": "RUNNING",
+      "containerConfig": {
+        "diskSize": 100
+      },
+      "driverConfig": {
+        "count": 1,
+        "cpuCount": 4,
+        "memorySize:": 4
+      },
+      "executorConfig": {
+        "count": 1,
+        "cpuCount": 4,
+        "memorySize:": 4
+      },
+      "attachedNotebooks": []
+    }
+  }
+}

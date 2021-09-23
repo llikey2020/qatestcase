@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sequoiadb</groupId>
+    <artifactId>sequoiadp-testing</artifactId>
+    <version>1.0.0</version>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <karate.version>1.1.0</karate.version>
+        <thrift.version>0.13.0</thrift.version>
+        <http.client.version>4.5.13</http.client.version>
+
+        <selenide.version>5.24.3</selenide.version>
+        <junit5.version>5.5.2</junit5.version>
+        <junit5.support>1.7.0</junit5.support>
+
+        <!-- plugins -->
+        <assembly.version>3.1.1</assembly.version>
+        <surefire.version>2.22.2</surefire.version>
+        <failsafe.version>2.22.2</failsafe.version>
+    </properties>
+
+    <dependencies>
+        <!-- karate's http client version is outdated, we need to change it to the newest one. -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${http.client.version}</version>
+        </dependency>
+
+        <!-- thrift -->
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>${thrift.version}</version>
+        </dependency>
+
+        <!-- karate -->
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate.version}</version>
+        </dependency>
+
+        <!-- selenide -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
+        </dependency>
+
+        <!-- junit5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit5.support}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>${junit5.support}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            <version>${junit5.support}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-console-standalone</artifactId>
+            <version>${junit5.support}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <!-- assembly plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${assembly.version}</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
+
+            <!-- surefire plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <reportsDirectory>test-output/sure-fire</reportsDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- failsafe plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <configuration>
+                    <reportsDirectory>test-output/fail-safe</reportsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
