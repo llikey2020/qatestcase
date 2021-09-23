@@ -14,7 +14,7 @@ function fn() {
             base_url: protocol + '://' + zeppelin_hostname + ':' + zeppelin_port,
             api_version: '/api',
             path: {
-                cluster: '/cluster',
+                cluster: '/sparkcluster',
                 database: '/database',
                 table: '/table'
             }
