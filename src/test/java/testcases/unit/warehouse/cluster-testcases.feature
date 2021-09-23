@@ -75,8 +75,7 @@ Scenario: Create Cluster,
 Scenario: Get Cluster's Info By ID
   - ARG: query_arg
 
-  Given path zeppelin.api_version + zeppelin.path.cluster
-  And   path query_arg.sparkClusterId
+  Given path query_arg.sparkClusterId
   When  method get
   Then  status 200
   And   match response == {status: 'OK', message: '', body: '#ignore'}
@@ -97,8 +96,7 @@ Scenario: Delete Cluster By ID
 Scenario: Toggle cluster to other status
   - ARG: toggle_arg
 
-  Given path zeppelin.api_version + zeppelin.path.cluster
-  And   path toggle_arg.sparkClusterId
+  Given path toggle_arg.sparkClusterId
   And   request toggle_arg
 
   When  method patch
