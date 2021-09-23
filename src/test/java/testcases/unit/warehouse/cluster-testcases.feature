@@ -22,6 +22,9 @@ Scenario: Test Cluster Ops
 
   # query and verify
   * def actual = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@query-cluster') query_arg
+  * set data.excepted.body.sparkClusterId = query_arg.sparkClusterId
+  * set data.excepted.body.name = create_arg.name
+  * set data.excepted.body.creator = create_arg.creator
   * match actual.response == data.excepted
 
   # delete
