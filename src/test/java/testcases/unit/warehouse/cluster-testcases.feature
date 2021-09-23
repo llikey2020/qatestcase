@@ -43,7 +43,7 @@ Scenario: Toggle Cluster On/Off
 
   * def query_arg = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@create-cluster') create_arg
   * def resp = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@query-cluster') query_arg
-  * print resp
+  * print resp.actual
 #  * match resp.body.status == 'RUNNING'
 
   # Stop Cluster
