@@ -67,7 +67,7 @@ Scenario: Create Cluster,
   Given request create_arg
   When  method post
   Then  status 200
-  And   match response == {status: 'OK', message: '', body: '#ignore'}
+  And   match response == {status: "OK", message: "", body: "#ignore"}
   And   def sparkClusterId = response.body.sparkClusterId
 
 @ignore
