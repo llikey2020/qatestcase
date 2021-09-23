@@ -47,7 +47,7 @@ Scenario: Toggle Cluster On/Off
 
   # Stop Cluster
   * def toggle_arg = {}
-  * set toggle_arg.sparkClusterId = resp.body.sparkClusterId
+  * set toggle_arg.sparkClusterId = resp.actual.sparkClusterId
   * set toggle_arg.operation = 'STOP'
   * call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@toggle-cluster') toggle_arg
 
