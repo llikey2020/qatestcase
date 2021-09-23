@@ -67,7 +67,7 @@ Scenario: Create Cluster,
   Given request create_arg
   When  method post
   Then  status 200
-  And   match response == {status: "OK", message: "", body: "#ignore"}
+  And   match response == {status: 'OK', message: '', body: '#ignore'}
   And   def sparkClusterId = response.body.sparkClusterId
 
 @ignore
@@ -75,10 +75,11 @@ Scenario: Create Cluster,
 Scenario: Get Cluster's Info By ID
   - ARG: query_arg
 
-  Given request query_arg.sparkClusterId
+  Given path zeppelin.api_version + zeppelin.path.cluster
+  And   path query_arg.sparkClusterId
   When  method get
   Then  status 200
-  And   match response == {status: 'OK', message: '', body: 'ignore'}
+  And   match response == {status: 'OK', message: '', body: '#ignore'}
   And   def actual = response.body
 
 @ignore
