@@ -43,8 +43,7 @@ Scenario: Toggle Cluster On/Off
 
   * def query_arg = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@create-cluster') create_arg
   * def resp = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@query-cluster') query_arg
-  * print resp.actual
-#  * match resp.body.status == 'RUNNING'
+  * match resp.actual.status == 'RUNNING'
 
   # Stop Cluster
   * def toggle_arg = {}
@@ -53,7 +52,7 @@ Scenario: Toggle Cluster On/Off
   * call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@toggle-cluster') toggle_arg
 
   * def resp2 = call read('classpath:testcases/unit/warehouse/cluster-testcases.feature@query-cluster') create_arg
-  * match resp2.body.status == 'STOP'
+  * match resp2.actual.status == 'STOP'
 
 
 Scenario: Attach Notebook to Cluster
