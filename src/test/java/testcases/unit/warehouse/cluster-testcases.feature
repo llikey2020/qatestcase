@@ -6,7 +6,6 @@ Background:
   * path  zeppelin.api_version + zeppelin.path.cluster
 
   * def data = read('classpath:data/warehouse/create-cluster.json')
-  * def create_arg = data.req
 
 
 Scenario: Test Cluster Ops
@@ -14,6 +13,7 @@ Scenario: Test Cluster Ops
   - 2. Get Cluster' info By ID, and verify that it meets expectations
   - 3. Delete cluster By ID and clean up.
 
+  * copy create_arg = data.req
   * set create_arg.name = 'cluster-testcases-1'
   * set create_arg.creator = 'cluster-tester-1'
 
@@ -34,6 +34,7 @@ Scenario: Toggle Cluster On/Off
   - 2. Toggle cluster off, and get cluster info
   - 3. Verify cluster's status
 
+  * copy create_arg = data.req
   * set create_arg.name = 'cluster-testcases-2'
   * set create_arg.creator = 'cluster-tester-2'
 
