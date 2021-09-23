@@ -13,7 +13,7 @@ public class VWHRunner extends TestBase {
     public void testParallel() {
         Stream<ScenarioResult> results = Runner.path("classpath:testcases/unit/warehouse")
                 .relativeTo(getClass())
-                .parallel(5)
+                .parallel(1)
                 .getScenarioResults();
 
         assertFail(results);
