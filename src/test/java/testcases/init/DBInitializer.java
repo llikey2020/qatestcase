@@ -33,7 +33,7 @@ public class DBInitializer implements BeforeAllCallback {
     public void beforeAll(ExtensionContext context) throws Exception {
         if (!started) {
             started = true;
-            executeScript("init.sql");
+//            executeScript("init.sql");
         }
     }
 
