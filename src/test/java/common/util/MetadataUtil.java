@@ -1,6 +1,7 @@
 package common.util;
 
 import common.lib.metadata.FileMetadata;
+import common.lib.metadata.FormatType;
 
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -23,7 +24,11 @@ public class MetadataUtil {
     }
 
     public static FileMetadata getMockFileMetadata() {
-        return null;
+        FileMetadata fileMetadata = new FileMetadata();
+
+        fileMetadata.setFile_format(FormatType.PARQUET);
+
+        return fileMetadata;
     }
 
     public static String getErrMsg(String input) {

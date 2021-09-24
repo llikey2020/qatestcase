@@ -37,6 +37,8 @@ public class PutFileMetadataTest {
 
     @Test
     void testPing() throws TException {
+        System.out.println(Configuration.METADATA_HOSTNAME);
+        System.out.println(Configuration.METADATA_PORT);
         holder.getClient().Ping();
     }
 
@@ -102,9 +104,9 @@ public class PutFileMetadataTest {
 
     @Test
     void testPutFileExists() throws TException {
-        FileMetadata metadata2 = MetadataUtil.getMockFileMetadata();
         try {
-            holder.getClient().putFileMetadata(databaseName, tableName, filename, metadata2);
+            holder.getClient().putFileMetadata(databaseName + "_BAK", tableName, filename, metadata);
+            holder.getClient().putFileMetadata(databaseName + "_BAK", tableName, filename, metadata);
         }
         catch (TApplicationException ex) {
             Assertions.assertEquals("Metadata.API.DataAccessException",
