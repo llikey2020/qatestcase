@@ -103,4 +103,5 @@ Scenario: Toggle cluster to other status
   And   request toggle_arg
 
   When  method patch
-  Then  match response == {status: 'OK', message: ''}
+  Then  status 200
+  And   match response == {status: 'OK', message: ''}

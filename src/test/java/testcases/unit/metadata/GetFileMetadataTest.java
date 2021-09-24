@@ -6,14 +6,13 @@ import common.util.MetadataUtil;
 import config.Configuration;
 import org.apache.thrift.TApplicationException;
 import org.apache.thrift.TException;
-import org.apache.thrift.transport.TTransportException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import testcases.init.DBInitializer;
 
 @ExtendWith(value = {DBInitializer.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PutFileMetadataTest {
+public class GetFileMetadataTest {
 
     private MDClientHolder holder = null;
     private boolean isSuccess = false;
@@ -25,37 +24,29 @@ public class PutFileMetadataTest {
     private FileMetadata metadata = MetadataUtil.getMockFileMetadata();
 
     @BeforeAll
-    void setup() throws TTransportException {
+    void setup() throws TException {
         holder = MDClientHolder.builder()
                 .hostname(Configuration.METADATA_HOSTNAME)
                 .port(Configuration.METADATA_PORT)
                 .timeout(Configuration.METADATA_TIMEOUT)
                 .build();
-    }
 
-    // ============== Testcases ==============
-
-    @Test
-    void testPing() throws TException {
-        holder.getClient().Ping();
+        holder.getClient().putFileMetadata(databaseName, tableName, filename, metadata);
+        isSuccess = true;
     }
 
     @Test
     void testNormal() throws TException {
-        holder.getClient().putFileMetadata(databaseName, tableName, filename, metadata);
-
         FileMetadata actual
                 = holder.getClient().getFileMetadata(databaseName, tableName, filename);
         Assertions.assertEquals(actual, metadata,
                 "inserted data is inconsistent with obtained data.");
-
-        isSuccess = true;
     }
 
     @Test
     void testWithInvalidParam_01() throws TException {
         try {
-            holder.getClient().putFileMetadata(null, tableName, filename, metadata);
+            holder.getClient().getFileMetadata(null, tableName, filename);
         }
         catch (TApplicationException ex) {
             Assertions.assertEquals("Metadata.API.InvalidRequestException",
@@ -67,7 +58,7 @@ public class PutFileMetadataTest {
     @Test
     void testWithInvalidParam_02() throws TException {
         try {
-            holder.getClient().putFileMetadata(databaseName, null, filename, metadata);
+            holder.getClient().getFileMetadata(databaseName, null, filename);
         }
         catch (TApplicationException ex) {
             Assertions.assertEquals("Metadata.API.InvalidRequestException",
@@ -79,7 +70,7 @@ public class PutFileMetadataTest {
     @Test
     void testWithInvalidParam_03() throws TException {
         try {
-            holder.getClient().putFileMetadata(databaseName, tableName, null, metadata);
+            holder.getClient().getFileMetadata(databaseName, tableName, null);
         }
         catch (TApplicationException ex) {
             Assertions.assertEquals("Metadata.API.InvalidRequestException",
@@ -89,27 +80,16 @@ public class PutFileMetadataTest {
     }
 
     @Test
-    void testWithInvalidParam_04() throws TException {
+    void testGetFileNotExists() throws TException {
         try {
-            holder.getClient().putFileMetadata(databaseName, tableName, filename, null);
+            holder.getClient().getFileMetadata(databaseName + "_BAK",
+                    tableName + "_BAK",
+                    filename + "_BAK");
         }
         catch (TApplicationException ex) {
-            Assertions.assertEquals("Metadata.API.InvalidRequestException",
+            Assertions.assertEquals("Metadata.API.NoObjectionException",
                     MetadataUtil.getErrMsg(ex.getMessage()),
-                    "invalid request: please make sure that invalid params have been handle correctly!");
-        }
-    }
-
-    @Test
-    void testPutFileExists() throws TException {
-        FileMetadata metadata2 = MetadataUtil.getMockFileMetadata();
-        try {
-            holder.getClient().putFileMetadata(databaseName, tableName, filename, metadata2);
-        }
-        catch (TApplicationException ex) {
-            Assertions.assertEquals("Metadata.API.DataAccessException",
-                    MetadataUtil.getErrMsg(ex.getMessage()),
-                    "error: try to put file metadata associated with an existing file.");
+                    "error: try to get file metadata associated with non-exist file.");
         }
     }
 

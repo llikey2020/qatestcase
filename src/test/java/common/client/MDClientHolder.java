@@ -1,6 +1,7 @@
 package common.client;
 
 import common.lib.metadata.MetadataService;
+import config.Configuration;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
@@ -29,9 +30,9 @@ public class MDClientHolder {
 
     public static class Builder {
 
-        private String hostname;
-        private int port;
-        private int timeout;
+        private String hostname = Configuration.METADATA_HOSTNAME;
+        private int port = Configuration.METADATA_PORT;
+        private int timeout = Configuration.METADATA_TIMEOUT;
 
         public Builder hostname(String hostname) {
             this.hostname = hostname;
